@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: budgey
+      POSTGRES_PASSWORD: budgey
+      POSTGRES_DB: budgey
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U budgey"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@budgey.local
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+
+  sync:
+    build:
+      context: ./sync
+      dockerfile: Dockerfile
+    volumes:
+      - ./sync:/app
+    environment:
+      - DATABASE_URL=postgresql://budgey:budgey@postgres:5432/budgey
+      - YNAB_PERSONAL_ACCESS_TOKEN=${YNAB_PERSONAL_ACCESS_TOKEN}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["python", "-m", "src.main"]
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=postgresql://budgey:budgey@postgres:5432/budgey
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    command: ["npm", "run", "dev"]
+
+volumes:
+  postgres_data:
