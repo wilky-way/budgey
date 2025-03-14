@@ -153,7 +153,7 @@ erDiagram
 - **Backend**: 
   - Python 3.13 with YNAB SDK 1.2.0
   - FastAPI 0.110.x+ for REST endpoints
-  - Drizzle ORM 0.30.x+
+  - SQLAlchemy 2.0.x+ for ORM
   - Poetry for dependency management
 
 - **Database**:
@@ -182,12 +182,12 @@ erDiagram
    - Initialize project structure
    - Set up Docker configuration
    - Configure PostgreSQL instance
-   - Set up Drizzle ORM
+   - Set up SQLAlchemy ORM
    - Configure Poetry for dependency management
 
 2. **Database Schema Design**
    - Create PostgreSQL schema mapping to YNAB's data model
-   - Implement Drizzle models
+   - Implement SQLAlchemy models
    - Set up migration scripts
 
 3. **YNAB API Integration**
@@ -199,7 +199,7 @@ erDiagram
 
 4. **Backend REST API Development**
    - Create endpoints for all entities
-   - Implement Drizzle queries
+   - Implement SQLAlchemy queries
    - Add filtering and sorting capabilities
    - Design caching strategies
 

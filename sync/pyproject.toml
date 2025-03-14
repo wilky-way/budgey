@@ -7,11 +7,11 @@ readme = "README.md"
 packages = [{include = "src"}]
 
 [tool.poetry.dependencies]
-python = "^3.13"
+python = "^3.12"
 ynab = "1.2.0"
 psycopg2-binary = "2.9.9"
 sqlalchemy = "2.0.27"
-pydantic = "2.6.1"
+pydantic = "2.5.2"  # Using an older version that's compatible with Python 3.12
 python-dotenv = "1.0.0"
 requests = "2.31.0"
 schedule = "1.2.1"
