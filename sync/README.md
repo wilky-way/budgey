@@ -22,7 +22,8 @@ The Sync Service is built with Python 3.13 and uses the official YNAB SDK to int
 ```
 sync/
 ├── Dockerfile          # Container definition
-├── requirements.txt    # Python dependencies
+├── pyproject.toml      # Poetry project definition and dependencies
+├── poetry.lock         # Poetry lock file (dependency resolution)
 ├── src/
 │   ├── main.py         # Entry point
 │   ├── models/         # Data models
@@ -53,8 +54,10 @@ docker-compose up sync
 
 ```bash
 cd sync
-pip install -r requirements.txt
-python -m src.main
+# Install Poetry if not already installed
+# pip install poetry
+poetry install
+poetry run python -m src.main
 ```
 
 ## Development
@@ -65,6 +68,24 @@ To add new features or modify the sync service:
 2. Add any new models in `src/models/`
 3. Write tests in the `tests/` directory
 4. Run tests before submitting changes
+
+### Managing Dependencies
+
+This project uses Poetry for dependency management:
+
+```bash
+# Add a new dependency
+poetry add package-name
+
+# Add a development dependency
+poetry add --dev package-name
+
+# Update dependencies
+poetry update
+
+# Generate requirements.txt (if needed)
+poetry export -f requirements.txt > requirements.txt
+```
 
 ## Sync Process
 

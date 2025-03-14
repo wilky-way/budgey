@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "sync"
+version = "0.1.0"
+description = "Sync service for Budgey"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+ynab = "1.2.0"
+psycopg2-binary = "2.9.9"
+sqlalchemy = "2.0.27"
+pydantic = "2.6.1"
+python-dotenv = "1.0.0"
+requests = "2.31.0"
+schedule = "1.2.1"
+tenacity = "8.2.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

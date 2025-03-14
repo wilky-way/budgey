@@ -154,6 +154,7 @@ erDiagram
   - Python 3.13 with YNAB SDK 1.2.0
   - FastAPI 0.110.x+ for REST endpoints
   - Drizzle ORM 0.30.x+
+  - Poetry for dependency management
 
 - **Database**:
   - PostgreSQL 16+ with pgvector extension
@@ -182,6 +183,7 @@ erDiagram
    - Set up Docker configuration
    - Configure PostgreSQL instance
    - Set up Drizzle ORM
+   - Configure Poetry for dependency management
 
 2. **Database Schema Design**
    - Create PostgreSQL schema mapping to YNAB's data model
@@ -285,6 +287,23 @@ cp .env.example .env
 
 # Start development containers
 docker-compose up -d
+```
+
+### Python Services Setup
+
+Both the sync and backend services use Poetry for dependency management:
+
+```bash
+# Install Poetry (if not already installed)
+pip install poetry
+
+# Install dependencies for sync service
+cd sync
+poetry install
+
+# Install dependencies for backend service
+cd ../backend
+poetry install
 ```
 
 ## License

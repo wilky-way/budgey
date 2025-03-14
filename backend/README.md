@@ -23,7 +23,8 @@ The Backend API is built with FastAPI, a modern, high-performance web framework 
 ```
 backend/
 ├── Dockerfile          # Container definition
-├── requirements.txt    # Python dependencies
+├── pyproject.toml      # Poetry project definition and dependencies
+├── poetry.lock         # Poetry lock file (dependency resolution)
 ├── app/
 │   ├── __init__.py
 │   ├── main.py         # Application entry point
@@ -79,8 +80,10 @@ docker-compose up backend
 
 ```bash
 cd backend
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+# Install Poetry if not already installed
+# pip install poetry
+poetry install
+poetry run uvicorn app.main:app --reload
 ```
 
 ## API Documentation
@@ -99,3 +102,20 @@ To add new endpoints or modify existing ones:
 3. Implement the endpoint in `app/api/api_v1/endpoints/`
 4. Register the endpoint in `app/api/api_v1/api.py`
 5. Write tests in the `tests/` directory
+
+### Managing Dependencies
+
+This project uses Poetry for dependency management:
+
+```bash
+# Add a new dependency
+poetry add package-name
+
+# Add a development dependency
+poetry add --dev package-name
+
+# Update dependencies
+poetry update
+
+# Generate requirements.txt (if needed)
+poetry export -f requirements.txt > requirements.txt
